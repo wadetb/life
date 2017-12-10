@@ -2,7 +2,11 @@
 
 I created this simple interactive life implementation for the 2017 Day of Code at Dora L. Small school in South Portland, ME.
 
-The activity generally went as follows:
+## Preview
+
+![Sample](sample.jpg)
+
+## Instructions
 
 * Clear the board and leave it paused.
 * Students gather around the monitor and you explain the 3 rules.
@@ -13,3 +17,6 @@ The activity generally went as follows:
 * Students design their own patterns using the worksheets and predict the outcomes.
 * Students use the computer in small groups testing the patterns they created, and experimenting with the example patterns. Motivated students should be able to create a working "glider gun".
 
+## Code
+
+The activity is written in simple HTML and JavaScript, advanced students might like to try changing the color of the dots, or altering the rules. How does it change if some of them are disabled?
