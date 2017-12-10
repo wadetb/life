@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Conway's Game of Life</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <style>
+        canvas {
+            border: 1px solid #000000;
+        }
+
+        .content {
+            display: flex;
+            flex-flow: row;
+        }
+
+        .sidebar {
+            min-width: 600px;
+            margin: 1em;
+        }
+
+        .rule {
+            display: flex;
+            flex-flow: row;
+            align-items: center;
+        }
+
+        .rule> :nth-child(1) {
+            font-weight: 500;
+            font-variant: small-caps;
+            width: 100px;
+        }
+
+        .rule> :nth-child(2) {
+            font-size: large;
+            width: 26px;
+        }
+
+        .rule>:nth-child(3) {
+            position: relative;
+            bottom: 3px;
+        }
+
+        .number {
+            font-size: x-large;
+            position: relative;
+            top: 2px;
+        }
+
+        img {
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="sidebar">
+            <h3>Conway's Game of Life</h3>
+
+            <p>The Game of Life is a cellular automaton, or self-operating machine, devised by the British mathematician John
+                Conway.
+            </p>
+            <p>Like checkers, the board is divided into squares. Some squares start with live
+                <em>cells</em> inside. That is how the game begins.</p>
+            <p>Each turn, there are three rules to follow. The rules depend on how many neighbors are alive.
+            </p>
+
+            <div class="rule">
+                <div>Too lonely</div>
+                <div>&mdash;</div>
+                <div>Any live cell with just
+                    <span class="number">①</span> neighbor dies.</div>
+            </div>
+            <div class="rule">
+                <div>Too crowded</div>
+                <div>&mdash;</div>
+                <div>Any live cell with
+                    <span class="number">④</span> or more neighbors dies.</div>
+            </div>
+            <div class="rule">
+                <div>Just right</div>
+                <div>&mdash;</div>
+                <div>Any dead cell with
+                    <span class="number">③</span> neighbors comes to life.</div>
+            </div>
+
+            <hr>
+            <p>The fun part is watching the computer play the game really fast!</p>
+            <a id="single-step" class="waves-effect waves-light btn">one step at a time</a>
+            <a id="animate" class="waves-effect waves-light btn">go full speed</a>
+            <hr>
+            <p>You can draw on the board with the mouse to bring cells to life or kill them. You can also find ideas for interesting
+                patterns using the buttons below.</p>
+            <a id="erase" class="waves-effect waves-light btn">erase the board</a>
+            <a id="randomize" class="waves-effect waves-light btn">sprinkle life</a>
+            <hr>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Game_of_life_block_with_border.svg/66px-Game_of_life_block_with_border.svg.png"
+                class="waves-effect waves-light btn">block</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Game_of_life_beehive.svg/98px-Game_of_life_beehive.svg.png"
+                class="waves-effect waves-light btn">beehive</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Game_of_life_loaf.svg/98px-Game_of_life_loaf.svg.png"
+                class="waves-effect waves-light btn">loaf</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Game_of_life_boat.svg/82px-Game_of_life_boat.svg.png"
+                class="waves-effect waves-light btn">boat</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Game_of_life_flower.svg/82px-Game_of_life_flower.svg.png"
+                class="waves-effect waves-light btn">tub</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/9/95/Game_of_life_blinker.gif" class="waves-effect waves-light btn">blink</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/1/12/Game_of_life_toad.gif" class="waves-effect waves-light btn">toad</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Game_of_life_beacon.gif" class="waves-effect waves-light btn">beacon</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/0/07/Game_of_life_pulsar.gif" class="waves-effect waves-light btn">pulsar</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/f/fb/I-Column.gif" class="waves-effect waves-light btn">pentadecathlon</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Game_of_life_animated_glider.gif" class="waves-effect waves-light btn">glider</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/3/37/Game_of_life_animated_LWSS.gif" class="waves-effect waves-light btn">lightweight spaceship</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Game_of_life_fpento.svg/82px-Game_of_life_fpento.svg.png"
+                class="waves-effect waves-light btn">R-pentomino</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Game_of_life_diehard.svg/162px-Game_of_life_diehard.svg.png"
+                class="waves-effect waves-light btn">diehard</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Game_of_life_acorn.svg/146px-Game_of_life_acorn.svg.png"
+                class="waves-effect waves-light btn">acorn</a>
+            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Game_of_life_glider_gun.svg/610px-Game_of_life_glider_gun.svg.png"
+                class="waves-effect waves-light btn">gosper glider gun</a>
+            <hr>
+            <img id="sample" src="">
+        </div>
+        <div>
+            <canvas id="life">
+            </canvas>
+        </div>
+    </div>
+</body>
+
+<script>
+    const width = 145;
+    const height = 70;
+
+    var board;
+
+    var canvas = document.getElementById("life");
+    var ctx = canvas.getContext("2d");
+
+    ctx.canvas.width = width * 20;
+    ctx.canvas.height = height * 20;
+
+    function erase() {
+        board = []
+        for (let y = 0; y < height; y++)
+            for (let x = 0; x < width; x++)
+                board[y * width + x] = false;
+    }
+
+    function randomize() {
+        board = []
+        for (let y = 0; y < height; y++)
+            for (let x = 0; x < width; x++)
+                board[y * width + x] = Math.random() > 0.5;
+    }
+
+    function is_alive(x, y) {
+        return board[((y + height) % height) * width + (x + width) % width]
+    }
+
+    const offsets = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]];
+
+    function count_neighbors_alive(x, y) {
+        sum = 0;
+        for (let offset of offsets)
+            sum = sum + is_alive(x + offset[0], y + offset[1]);
+        return sum;
+    }
+
+
+    function conways_game_of_life_rules(a, n) {
+        if (a) {
+            if (n < 2 || n > 3)
+                return false;
+            else
+                return true;
+        }
+        if (!a) {
+            if (n == 3)
+                return true;
+            else
+                return false;
+        }
+    }
+
+    let animate;
+
+    function paint_cell(x, y, a) {
+        if (a)
+            ctx.fillStyle = "#000078";
+        else
+            ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(x * 20 + 10, y * 20 + 10, 9, 0, 2 * Math.PI);
+        ctx.fill();
+    }
+
+    function repaint() {
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                paint_cell(x, y, board[y * width + x]);
+            }
+        }
+    }
+
+    function turn() {
+        new_board = new Array(width * height);
+
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                let a = is_alive(x, y);
+                let n = count_neighbors_alive(x, y);
+                let still_alive = conways_game_of_life_rules(a, n);
+
+                if (still_alive != a) {
+                    paint_cell(x, y, still_alive);
+                }
+
+                new_board[y * width + x] = still_alive;
+            }
+        }
+
+        board = new_board
+
+        if (animate)
+            window.requestAnimationFrame(turn);
+    }
+
+    randomize();
+
+    animate = true;
+    window.requestAnimationFrame(turn);
+
+    document.querySelector("#single-step")
+        .addEventListener("click", function () {
+            animate = false;
+            turn();
+        });
+
+    document.querySelector("#animate")
+        .addEventListener("click", function () {
+            animate = true;
+            window.requestAnimationFrame(turn);
+        });
+
+    document.querySelector("#randomize")
+        .addEventListener("click", function () {
+            for (let i = 0; i < 100; i++) {
+                let x = Math.trunc(Math.random() * width - 1);
+                let y = Math.trunc(Math.random() * height - 1);
+                board[y * width + x] = true;
+                paint_cell(x, y, true);
+            }
+            repaint();
+        });
+
+    document.querySelector("#erase")
+        .addEventListener("click", function () {
+            erase();
+            repaint();
+        });
+
+    for (let btn of document.querySelectorAll("#make")) {
+        btn.addEventListener("click", function (ev) {
+            document.getElementById("sample").src = ev.target.dataset.src;
+        });
+    }
+
+    // canvas.addEventListener('mousemove', function() {
+    // });
+
+    canvas.addEventListener('mousedown', function (ev) {
+        let rect = canvas.getBoundingClientRect();
+        let canvasX = ev.clientX - rect.left;
+        let canvasY = ev.clientY - rect.top;
+        let x = Math.trunc(canvasX / 20);
+        let y = Math.trunc(canvasY / 20);
+        let a = !board[y * width + x];
+        board[y * width + x] = a;
+        paint_cell(x, y, a);
+    });
+
+</script>
+
+</html>
