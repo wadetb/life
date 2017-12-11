@@ -4,6 +4,10 @@ I created this simple interactive activity and accompanying worksheet for the 20
 
 For a description of Conway's Game of Life and cellular automata in general, see https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life.
 
+A direct link to the activity is here: https://rawgit.com/wadetb/life/master/life.html
+
+The optional worksheet is here: https://rawgit.com/wadetb/life/master/Game%20of%20Life%20Sheet.pdf
+
 ## Preview
 
 ![Sample](sample.jpg)
