@@ -25,7 +25,7 @@ The optional worksheet is here: https://rawgit.com/wadetb/life/master/Game%20of%
 ## Discussions
 
 * Examine why clicking on an open space in the board, while the simulation is running, has no apparent effect. How is pausing the simulation useful?
-* After the state settles, examine various stable structures that form. Try to determine why each one is stable. Experiment with clicking on different parts of stable structures while the simulation is running (this killing or activating one cell) and see how this affects the "community". Example: Any one corner of a square can be killed and it will be "healed".
+* After the state settles, examine various stable structures that form. Try to determine why each one is stable. Experiment with clicking on different parts of stable structures while the simulation is running (killing or activating one cell) and see how this affects the "community". Example: Any one corner of a square can be killed and it will be "healed".
 * After the state settles, examine a 3-row to 3-column oscillator. Have students help you through one oscillation. Discuss the meaning of "to oscillate". Challenge students to come up with another oscillator. Note- the examples section has several.
 * Ask students whether they believe the simulation will always stabilize, or if it might go on changing forever. Pause, clear the board, and create a glider.
 * Talk to students about building complicated machines on simple structures. Show them how working computers have been built on the game of life (and its 3 simple rules), for example: https://www.youtube.com/watch?v=My8AsV7bA94
