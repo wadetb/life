@@ -11,7 +11,7 @@ For a description of Conway's Game of Life and cellular automata in general, see
 ## Instructions
 
 * Clear the board and leave it paused while students gather around the monitor.
-* Explain the 3 rules. Relate them to underpopulation and overpopulation of human and animal communities.
+* Explain the 3 rules. Relate them to underpopulation and overpopulation of other kinds of communities.
 * Demonstrate each rule in turn, by drawing a simple pattern with the mouse and advancing the simulation one step. Students predict the outcome before advancing.
 * Use the "sprinkle life" button to scatter live cells randomly around the board. Students make predictions about how many will survive. Keep sprinkling life until the students vote to stop.
 * Run the simulation full speed and watch it animate. Ask if the outcome matches their predictions.
