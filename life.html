@@ -6,10 +6,10 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <title>Conway's Game of Life</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> -->
     <style>
-        canvas {
-            border: 1px solid #000000;
+        body {
+            overflow: hidden;
         }
 
         .content {
@@ -19,7 +19,12 @@
 
         .sidebar {
             min-width: 600px;
+            max-width: 600px;
             margin: 1em;
+        }
+
+        .gameboard {
+            flex-grow: 1;
         }
 
         .rule {
@@ -90,14 +95,15 @@
 
             <hr>
             <p>The fun part is watching the computer play the game really fast!</p>
+            <a id="animate-slow" class="waves-effect waves-light btn">go slow</a>
+            <a id="animate-fast" class="waves-effect waves-light btn">go full speed</a>
             <a id="single-step" class="waves-effect waves-light btn">one step at a time</a>
-            <a id="animate" class="waves-effect waves-light btn">go full speed</a>
             <hr>
-            <p>You can draw on the board with the mouse to bring cells to life or kill them. You can also find ideas for interesting
-                patterns using the buttons below.</p>
+            <p>You can draw on the board with the mouse to bring cells to life or kill them.</p>
             <a id="erase" class="waves-effect waves-light btn">erase the board</a>
             <a id="randomize" class="waves-effect waves-light btn">sprinkle life</a>
             <hr>
+            <p>Here are some interesting patterns that others have found. Build them and try to and predict what will happen!</p>
             <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Game_of_life_block_with_border.svg/66px-Game_of_life_block_with_border.svg.png"
                 class="waves-effect waves-light btn">block</a>
             <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Game_of_life_beehive.svg/98px-Game_of_life_beehive.svg.png"
@@ -109,24 +115,26 @@
             <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Game_of_life_flower.svg/82px-Game_of_life_flower.svg.png"
                 class="waves-effect waves-light btn">tub</a>
             <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/9/95/Game_of_life_blinker.gif" class="waves-effect waves-light btn">blink</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/1/12/Game_of_life_toad.gif" class="waves-effect waves-light btn">toad</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Game_of_life_beacon.gif" class="waves-effect waves-light btn">beacon</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/0/07/Game_of_life_pulsar.gif" class="waves-effect waves-light btn">pulsar</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/f/fb/I-Column.gif" class="waves-effect waves-light btn">pentadecathlon</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Game_of_life_animated_glider.gif" class="waves-effect waves-light btn">glider</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/3/37/Game_of_life_animated_LWSS.gif" class="waves-effect waves-light btn">lightweight spaceship</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Game_of_life_fpento.svg/82px-Game_of_life_fpento.svg.png"
-                class="waves-effect waves-light btn">R-pentomino</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Game_of_life_diehard.svg/162px-Game_of_life_diehard.svg.png"
-                class="waves-effect waves-light btn">diehard</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Game_of_life_acorn.svg/146px-Game_of_life_acorn.svg.png"
-                class="waves-effect waves-light btn">acorn</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/c/c9/Toad.png" class="waves-effect waves-light btn">toad</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/b/b3/Beacon.png" class="waves-effect waves-light btn">beacon</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/4/49/Pulsar.png" class="waves-effect waves-light btn">pulsar</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/5/57/Pentadecathlon.png" class="waves-effect waves-light btn">pentadecathlon</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/7/79/Glider.png" class="waves-effect waves-light btn">glider</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/e/e2/Lwss.png" class="waves-effect waves-light btn">lightweight spaceship</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/6/6e/Rpentomino.png" class="waves-effect waves-light btn">R-pentomino</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/7/7e/Diehard.png" class="waves-effect waves-light btn">diehard</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/c/cd/Acorn.png" class="waves-effect waves-light btn">acorn</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/3/3f/Brain.png" class="waves-effect waves-light btn">brain</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/2/29/Dart.png" class="waves-effect waves-light btn">dart</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/f/f8/Wasp.png" class="waves-effect waves-light btn">wasp</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/e/e9/Turtle.png" class="waves-effect waves-light btn">turtle</a>
+            <a id="make" data-src="http://www.conwaylife.com/w/images/7/76/25p3h1v0.1.png" class="waves-effect waves-light btn">25P3H1V0.1</a>
             <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Game_of_life_glider_gun.svg/610px-Game_of_life_glider_gun.svg.png"
                 class="waves-effect waves-light btn">gosper glider gun</a>
             <hr>
             <img id="sample" src="">
         </div>
-        <div>
+        <div class="gameboard">
             <canvas id="life">
             </canvas>
         </div>
@@ -134,16 +142,38 @@
 </body>
 
 <script>
-    const width = 145;
-    const height = 70;
-
-    var board;
+    var width = 0;
+    var height = 0;
+    var board = [];
 
     var canvas = document.getElementById("life");
     var ctx = canvas.getContext("2d");
 
-    ctx.canvas.width = width * 20;
-    ctx.canvas.height = height * 20;
+    function resize() {
+        newWidth = Math.trunc((window.innerWidth - 600) / 20) + 1;
+        newHeight = Math.trunc(window.innerHeight / 20) + 1;
+        newBoard = [];
+        for (let y = 0; y < newHeight; y++) {
+            for (let x = 0; x < newWidth; x++) {
+                if (x < width && y < height) {
+                    newBoard[y * newWidth + x] = board[y * width + x];
+                } else {
+                    newBoard[y * newWidth + x] = false;
+                }
+            }
+        }
+        width = newWidth;
+        height = newHeight;
+        board = newBoard;
+        oldData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        canvas.width = newWidth * 20;
+        canvas.height = newHeight * 20;
+        ctx.putImageData(oldData, 0, 0);
+        // repaint();
+    }
+
+    resize();
+    window.onresize = resize;
 
     function erase() {
         board = []
@@ -172,7 +202,6 @@
         return sum;
     }
 
-
     function conways_game_of_life_rules(a, n) {
         if (a) {
             if (n < 2 || n > 3)
@@ -189,6 +218,10 @@
     }
 
     let animate;
+    let slow;
+
+    let animId;
+    let intervalId;
 
     function paint_cell(x, y, a) {
         if (a)
@@ -227,29 +260,61 @@
 
         board = new_board
 
-        if (animate)
-            window.requestAnimationFrame(turn);
+        if (animate) {
+            if (!slow) {
+                animId = window.requestAnimationFrame(turn);
+            }
+        }
     }
 
     randomize();
+    start(false);
 
-    animate = true;
-    window.requestAnimationFrame(turn);
+    function stop() {
+        if (animId) {
+            window.cancelAnimationFrame(animId);
+            animId = 0;
+        }
+        if (intervalId) {
+            window.clearInterval(intervalId);
+            intervalId = 0;
+        }
+        animate = false;
+        slow = false;
+    }
+
+    function start(slow_) {
+        animate = true;
+        slow = slow_;
+        if (slow) {
+            intervalId = window.setInterval(turn, 600);
+        } else {
+            animId = window.requestAnimationFrame(turn);
+        }
+    }
 
     document.querySelector("#single-step")
         .addEventListener("click", function () {
-            animate = false;
+            stop();
             turn();
         });
 
-    document.querySelector("#animate")
+    document.querySelector("#animate-fast")
         .addEventListener("click", function () {
-            animate = true;
-            window.requestAnimationFrame(turn);
+            stop();
+            start(false);
+        });
+
+
+    document.querySelector("#animate-slow")
+        .addEventListener("click", function () {
+            stop();
+            start(true);
         });
 
     document.querySelector("#randomize")
         .addEventListener("click", function () {
+            stop();
             for (let i = 0; i < 100; i++) {
                 let x = Math.trunc(Math.random() * width - 1);
                 let y = Math.trunc(Math.random() * height - 1);
@@ -261,6 +326,7 @@
 
     document.querySelector("#erase")
         .addEventListener("click", function () {
+            stop();
             erase();
             repaint();
         });
