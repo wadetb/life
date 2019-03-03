@@ -5,11 +5,32 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <title>Conway's Game of Life</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> -->
     <style>
         body {
             overflow: hidden;
+        }
+
+        .controls {
+            position: absolute;
+            background: white;
+            border: 1px solid black;
+            border-radius: 10px;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+        }
+        .controls button#single-step img {
+            position: relative;
+            left: 15px;
+        }
+        .controls button {
+            width: 100px;
+            height: 150px;
+            background: none;
+            border: none;
+        }
+        .controls button:active {
+            opacity: .5;
         }
 
         .content {
@@ -17,134 +38,20 @@
             flex-flow: row;
         }
 
-        .sidebar {
-            min-width: 600px;
-            max-width: 600px;
-            margin: 1em;
-        }
-
-        .callout {
-            width: 240px;
-            float: right;
-            margin-left: 10px;
-        }
-
-        .callout> img {
-            width: 100%;
-            height: auto;
-        }
-
         .gameboard {
             flex-grow: 1;
-        }
-
-        .rule {
-            display: flex;
-            flex-flow: row;
-            align-items: center;
-        }
-
-        .rule> :nth-child(1) {
-            font-weight: 500;
-            font-variant: small-caps;
-            width: 100px;
-        }
-
-        .rule> :nth-child(2) {
-            font-size: large;
-            width: 26px;
-        }
-
-        .rule>:nth-child(3) {
-            position: relative;
-            bottom: 3px;
-        }
-
-        .number {
-            font-size: x-large;
-            position: relative;
-            top: 2px;
-        }
-
-        img {
-            margin: 0 auto;
         }
     </style>
 </head>
 
 <body>
     <div class="content">
-        <div class="sidebar">
-            <h3>Conway's Game of Life</h3>
-            <div class="callout"><img src="https://upload.wikimedia.org/wikipedia/commons/0/04/John_H_Conway_2005_%28cropped%29.jpg"></div>
-
-            <p>The Game of Life is a cellular automaton, or self-operating machine, devised by the British mathematician John
-                Conway.
-            </p>
-            <p>Like checkers, the board is divided into squares. Some squares start with live
-                <em>cells</em> inside. That is how the game begins.</p>
-            <p>Each turn, there are three rules to follow. The rules depend on how many neighbors are alive.
-            </p>
-
-            <div class="rule">
-                <div>Too lonely</div>
-                <div>&mdash;</div>
-                <div>Any live cell with just
-                    <span class="number">①</span> neighbor dies.</div>
-            </div>
-            <div class="rule">
-                <div>Too crowded</div>
-                <div>&mdash;</div>
-                <div>Any live cell with
-                    <span class="number">④</span> or more neighbors dies.</div>
-            </div>
-            <div class="rule">
-                <div>Just right</div>
-                <div>&mdash;</div>
-                <div>Any dead cell with
-                    <span class="number">③</span> neighbors comes to life.</div>
-            </div>
-
-            <hr>
-            <p>The fun part is watching the computer play the game really fast!</p>
-            <a id="animate-slow" class="waves-effect waves-light btn">go slow</a>
-            <a id="animate-fast" class="waves-effect waves-light btn">go full speed</a>
-            <a id="single-step" class="waves-effect waves-light btn">one step at a time</a>
-            <hr>
-            <p>You can draw on the board with the mouse to bring cells to life or kill them.</p>
-            <a id="erase" class="waves-effect waves-light btn">erase the board</a>
-            <a id="randomize" class="waves-effect waves-light btn">sprinkle life</a>
-            <hr>
-            <p>Here are some interesting patterns that others have found. Build them and try to and predict what will happen!</p>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Game_of_life_block_with_border.svg/66px-Game_of_life_block_with_border.svg.png"
-                class="waves-effect waves-light btn">block</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Game_of_life_beehive.svg/98px-Game_of_life_beehive.svg.png"
-                class="waves-effect waves-light btn">beehive</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Game_of_life_loaf.svg/98px-Game_of_life_loaf.svg.png"
-                class="waves-effect waves-light btn">loaf</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Game_of_life_boat.svg/82px-Game_of_life_boat.svg.png"
-                class="waves-effect waves-light btn">boat</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Game_of_life_flower.svg/82px-Game_of_life_flower.svg.png"
-                class="waves-effect waves-light btn">tub</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/9/95/Game_of_life_blinker.gif" class="waves-effect waves-light btn">blink</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/c/c9/Toad.png" class="waves-effect waves-light btn">toad</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/b/b3/Beacon.png" class="waves-effect waves-light btn">beacon</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/4/49/Pulsar.png" class="waves-effect waves-light btn">pulsar</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/5/57/Pentadecathlon.png" class="waves-effect waves-light btn">pentadecathlon</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/7/79/Glider.png" class="waves-effect waves-light btn">glider</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/e/e2/Lwss.png" class="waves-effect waves-light btn">lightweight spaceship</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/6/6e/Rpentomino.png" class="waves-effect waves-light btn">R-pentomino</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/7/7e/Diehard.png" class="waves-effect waves-light btn">diehard</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/c/cd/Acorn.png" class="waves-effect waves-light btn">acorn</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/3/3f/Brain.png" class="waves-effect waves-light btn">brain</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/2/29/Dart.png" class="waves-effect waves-light btn">dart</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/f/f8/Wasp.png" class="waves-effect waves-light btn">wasp</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/e/e9/Turtle.png" class="waves-effect waves-light btn">turtle</a>
-            <a id="make" data-src="http://www.conwaylife.com/w/images/7/76/25p3h1v0.1.png" class="waves-effect waves-light btn">25P3H1V0.1</a>
-            <a id="make" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Game_of_life_glider_gun.svg/610px-Game_of_life_glider_gun.svg.png"
-                class="waves-effect waves-light btn">gosper glider gun</a>
-            <hr>
-            <img id="sample" src="">
+        <div class="controls">
+            <button id="single-step"><image src="icon-step.svg"></image></button>
+            <button id="animate-slow"><image src="icon-slow.svg"></image></button>
+            <button id="animate-fast"><image src="icon-fast.svg"></image></button>
+            <button id="erase"><image src="icon-clear.svg"></image></button>
+            <button id="randomize"><image src="icon-sprinkle.svg"></image></button>
         </div>
         <div class="gameboard">
             <canvas id="life">
@@ -162,7 +69,7 @@
     var ctx = canvas.getContext("2d");
 
     function resize() {
-        newWidth = Math.trunc((window.innerWidth - 600) / 20) + 1;
+        newWidth = Math.trunc(window.innerWidth / 20) + 1;
         newHeight = Math.trunc(window.innerHeight / 20) + 1;
         newBoard = [];
         for (let y = 0; y < newHeight; y++) {
