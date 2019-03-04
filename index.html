@@ -33,6 +33,9 @@
         .controls button:active {
             opacity: .5;
         }
+        .controls button.off {
+            opacity: .25;
+        }
 
         .content {
             display: flex;
@@ -143,14 +146,24 @@
     let animId;
     let intervalId;
 
-    function paint_cell(x, y, a) {
-        if (a)
-            ctx.fillStyle = "#000078";
-        else
-            ctx.fillStyle = "#ffffff";
-        ctx.beginPath();
-        ctx.arc(x * 20 + 10, y * 20 + 10, 9, 0, 2 * Math.PI);
-        ctx.fill();
+    function paint_cell(x, y, alive) {
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(x * 20, y * 20, 20, 20);
+        if (alive) {
+            ctx.fillStyle = "#303078";
+            ctx.strokeStyle = "#fefefe";
+            ctx.beginPath();
+            ctx.arc(x * 20 + 10, y * 20 + 10, 9, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.stroke();
+        } else {
+            ctx.fillStyle = "#d0d0f8";
+            ctx.strokeStyle = "#d0d0f8";
+            ctx.beginPath();
+            ctx.arc(x * 20 + 10, y * 20 + 10, 8, 0, 2 * Math.PI);
+            //ctx.fill();
+            ctx.stroke();
+        }
     }
 
     function repaint() {
@@ -201,15 +214,23 @@
         }
         animate = false;
         slow = false;
+        document.getElementById("single-step").classList.remove("off");
+        document.getElementById("animate-fast").classList.add("off");
+        document.getElementById("animate-slow").classList.add("off");
     }
 
     function start(slow_) {
         animate = true;
         slow = slow_;
+        document.getElementById("single-step").classList.add("off");
         if (slow) {
             intervalId = window.setInterval(turn, 600);
+            document.getElementById("animate-fast").classList.add("off");
+            document.getElementById("animate-slow").classList.remove("off");
         } else {
             animId = window.requestAnimationFrame(turn);
+            document.getElementById("animate-fast").classList.remove("off");
+            document.getElementById("animate-slow").classList.add("off");
         }
     }
 
