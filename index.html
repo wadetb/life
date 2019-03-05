@@ -23,7 +23,7 @@
             left: 15px;
         }
         .controls button {
-            transform: rotate(90deg);
+            /* transform: rotate(90deg); */
             width: 100px;
             height: 150px;
             background: none;
@@ -50,11 +50,11 @@
 <body>
     <div class="content">
         <div class="controls">
-            <button id="single-step"><image src="icon-step.svg"></image></button>
-            <button id="animate-slow"><image src="icon-slow.svg"></image></button>
-            <button id="animate-fast"><image src="icon-fast.svg"></image></button>
-            <button id="erase"><image src="icon-clear.svg"></image></button>
-            <button id="randomize"><image src="icon-sprinkle.svg"></image></button>
+            <button id="single-step"><image src="icons/icon-step.svg"></image></button>
+            <button id="animate-slow"><image src="icons/icon-slow.svg"></image></button>
+            <button id="animate-fast"><image src="icons/icon-fast.svg"></image></button>
+            <button id="erase"><image src="icons/icon-clear.svg"></image></button>
+            <button id="randomize"><image src="icons/icon-sprinkle.svg"></image></button>
         </div>
         <div class="gameboard">
             <canvas id="life">
@@ -87,11 +87,11 @@
         width = newWidth;
         height = newHeight;
         board = newBoard;
-        oldData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        // oldData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         canvas.width = newWidth * 20;
         canvas.height = newHeight * 20;
-        ctx.putImageData(oldData, 0, 0);
-        // repaint();
+        // ctx.putImageData(oldData, 0, 0);
+        repaint();
     }
 
     resize();
@@ -277,18 +277,27 @@
         });
     }
 
-    // canvas.addEventListener('mousemove', function() {
-    // });
-
-    canvas.addEventListener('mousedown', function (ev) {
+    function onClick(clientX, clientY) {
         let rect = canvas.getBoundingClientRect();
-        let canvasX = ev.clientX - rect.left;
-        let canvasY = ev.clientY - rect.top;
+        let canvasX = clientX - rect.left;
+        let canvasY = clientY - rect.top;
         let x = Math.trunc(canvasX / 20);
         let y = Math.trunc(canvasY / 20);
         let a = !board[y * width + x];
         board[y * width + x] = a;
         paint_cell(x, y, a);
+    }
+    
+    canvas.addEventListener("touchstart", function(ev) {
+        ev.preventDefault();
+        var touches = ev.changedTouches;
+        for (var i = 0; i < touches.length; i++) {
+            onClick(touches[i].clientX, touches[i].clientY);
+        }
+    });
+    canvas.addEventListener('mousedown', function(ev) {
+        ev.preventDefault();
+        onClick(ev.clientX, ev.clientY);
     });
 
 </script>
