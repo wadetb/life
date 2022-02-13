@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+This software is for educational purposes to encourage students to
+explore Conway's Game of Life as a way to learn how to reason about
+formal rule-based algorithms.
 
+Copyright (c) 2019 Wade Brainerd
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, version 3.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+See the complete GNU General Public License, version 3
+at https://www.gnu.org/licenses/
+
+GPL-3.0-only
+-->
 <head>
     <meta charset="utf-8">
     <title>Conway's Game of Life</title>
@@ -287,7 +307,7 @@
         board[y * width + x] = a;
         paint_cell(x, y, a);
     }
-    
+
     canvas.addEventListener("touchstart", function(ev) {
         ev.preventDefault();
         var touches = ev.changedTouches;
@@ -303,3 +323,4 @@
 </script>
 
 </html>
+

@@ -40,3 +40,21 @@ The optional worksheet is here: https://rawgit.com/wadetb/life/master/Game%20of%
 The activity is written in simple HTML and JavaScript. Advanced students might like to try changing the color of the dots, or altering the rules. 
 
 How does it change if some of the rules are disabled? The website <a href="conwaylife.com">conwaylife.com</a> lists a number of rule variations; challenge the students to implement one of them.
+
+## License
+
+Copyright &#169; 2019 [Wade Brainerd](https://wadeb.com/)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the [GNU General Public License](./LICENSE)
+as published by the Free Software Foundation, version 3.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+A complete copy of the [GNU General Public License, version 3](./LICENSE)
+is included in this source code repository. It is also
+available at [https://www.gnu.org/licenses/](https://www.gnu.org/licenses/).
+
